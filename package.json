@@ -5,12 +5,14 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "babel-plugin-macros": "^2.5.1",
+    "jwt-decode": "^2.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-facebook-login": "^4.1.1",
     "react-hanger": "^1.1.4",
     "react-relay": "^3.0.0",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "store": "^2.0.12"
   },
   "scripts": {
     "start": "react-scripts start",

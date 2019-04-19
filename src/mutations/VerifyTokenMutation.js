@@ -10,7 +10,7 @@ const mutation = graphql`
     }
 `
 
-const commit = token => {
+const commit = (token, callback) => {
     const variables = {
         token
     }
@@ -18,12 +18,17 @@ const commit = token => {
     commitMutation(environment, {
         mutation,
         variables,
-        onCompleted: response => {
-            return !!response.payload
+        onCompleted: (response, errors) => {
+            if (errors) {
+                // TODO: Better error handling
+                callback(null)
+                return
+            }
+
+            callback(response.verifyToken.payload)
         },
         onError: err => {
             console.log(err)
-            return false
         }
     })
 }

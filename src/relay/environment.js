@@ -1,4 +1,5 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime'
+import store from 'store'
 import { JWT_AUTH_TOKEN } from '../constants'
 
 const RELAY_ENDPOINT =
@@ -6,8 +7,8 @@ const RELAY_ENDPOINT =
         ? 'https://example.com/graphql'
         : 'http://localhost:8000/graphql'
 
-async function fetchQuery(operation, variables, cacheConfig, uploadables) {
-    const authToken = await localStorage.getItem(JWT_AUTH_TOKEN)
+function fetchQuery(operation, variables, cacheConfig, uploadables) {
+    const authToken = store.get(JWT_AUTH_TOKEN)
     const authHeader = authToken ? { Authorization: `JWT ${authToken}` } : {}
 
     return fetch(RELAY_ENDPOINT, {
@@ -29,11 +30,11 @@ async function fetchQuery(operation, variables, cacheConfig, uploadables) {
 
 // Create a network layer from the fetch function
 const network = Network.create(fetchQuery)
-const store = new Store(new RecordSource())
+const relay_store = new Store(new RecordSource())
 
 const environment = new Environment({
     network,
-    store
+    store: relay_store
 })
 
 export default environment
